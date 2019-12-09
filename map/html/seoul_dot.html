@@ -75,7 +75,7 @@
 
     var path = d3.geo.path().projection(projection);
 
-    d3.json("seoul_municipalities_topo_simple.json", function(error, data) {
+    d3.json("/DV_FINAL/map/csv/seoul_municipalities_topo_simple.json", function(error, data) {
       var features = topojson.feature(data, data.objects.seoul_municipalities_geo).features;
       map.selectAll('path')
           .data(features)
@@ -92,7 +92,7 @@
           .text(function(d) { return d.properties.name; })
     });
 
-    d3.csv("df_accident.csv", function(data) {
+    d3.csv("/DV_FINAL/map/csv/df_accident.csv", function(data) {
       places.selectAll("circle")
           .data(data)
         .enter().append("circle")
@@ -102,7 +102,7 @@
           .attr("fill","#8856a7");
 
     });
-    d3.csv("df_gwasok.csv", function(data) {
+    d3.csv("/DV_FINAL/map/csv/df_gwasok.csv", function(data) {
         places.selectAll("circle")
             .data(data)
           .enter().append("circle")

@@ -57,8 +57,8 @@
     var popByName = d3.map();
 
     queue()
-        .defer(d3.json, "seoul_municipalities_topo_simple.json")
-        .defer(d3.csv, "df_ingu.csv", function(d) {
+        .defer(d3.json, "/DV_FINAL/map/csv/seoul_municipalities_topo_simple.json")
+        .defer(d3.csv, "/DV_FINAL/map/csv/df_ingu.csv", function(d) {
             popByName.set(d.name, +d.population);
         })
         .await(ready);
@@ -91,7 +91,7 @@
 
     }
 
-      d3.csv("df_accident.csv", function(data) {
+      d3.csv("/DV_FINAL/map/csv/df_accident.csv", function(data) {
           svg.selectAll("circle")
               .data(data)
               .enter().append("circle")
