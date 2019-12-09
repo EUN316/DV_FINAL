@@ -35,17 +35,11 @@
           font: 10px sans-serif;
           text-anchor: start;
         }
-        #title {
-            font-family: sans-serif;
-        }
-        #title p {
-            font-size: 10pt;
-        }
     </style>
   </head>
   <body>
     <div id="title">
-        <h3><br>사고다발지역 & 과속방지턱 </h3>
+        <h2><br>사고다발지역 & 과속방지턱 </h2>
 
     </div>
     <div id="chart"></div>
@@ -53,8 +47,8 @@
     <script src="https://d3js.org/d3.v3.min.js"></script>
     <script src="https://d3js.org/topojson.v1.min.js"></script>
     <script>
-    var width = 1000,
-        height = 600;
+    var width = 1100,
+        height = 700;
 
     var svg = d3.select("#chart").append("svg")
         .attr("width", width)
