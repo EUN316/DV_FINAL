@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <style>
+    svg circle {
+      opacity: 0.8;
+      stroke: white;
+    }
+    svg circle:hover {
+      opacity: 1;
+      stroke: #333;
+    }
+    svg { background-color: #eee; }
+  svg .municipality { fill: red; }
+    svg .municipality:hover { stroke: #333; }
+    svg .municipality.p0 { fill: #ffffd9; }
+    svg .municipality.p1 { fill: #edf8b1; }
+    svg .municipality.p2 { fill: #c7e9b4; }
+    svg .municipality.p3 { fill: #7fcdbb; }
+    svg .municipality.p4 { fill: #41b6c4; }
+    svg .municipality.p5 { fill: #1d91c0; }
+    /*svg .municipality.p6 { fill: #225ea8; }
+    svg .municipality.p7 { fill: #253494; }
+    svg .municipality.p8 { fill: #081d58; }*/
+    svg text { font-size: 10px; }
+    </style>
+  </head>
+  <body>
+    <h2> 서울시 구별 10-14세 인구 수</h2>
+    <div id="chart"></div>
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="https://d3js.org/topojson.v1.min.js"></script>
+    <script src="https://d3js.org/queue.v1.min.js"></script>
+    <script>
+    var width = 1000,
+        height = 600;
+
+    var svg = d3.select("#chart").append("svg")
+        .attr("width", width)
+        .attr("height", height);
+
+    var map = svg.append("g").attr("id", "map"),
+        places = svg.append("g").attr("id", "places");
+
+    var projection = d3.geo.mercator()
+        .center([126.9895, 37.5651])
+        .scale(100000)
+        .translate([width/2, height/2]);
+
+    var path = d3.geo.path().projection(projection);
+
+    var quantize = d3.scale.quantize()
+        .domain([0,30000])
+        .range(d3.range(6).map(function(i) { return "p"+ i; }));
+
+    var popByName = d3.map();
+
+    queue()
+        .defer(d3.json, "seoul_municipalities_topo_simple.json")
+        .defer(d3.csv, "df_ingu.csv", function(d) {
+            popByName.set(d.name, +d.population);
+        })
+        .await(ready);
+
+    function ready(error, data) {
+      var features = topojson.feature(data, data.objects.seoul_municipalities_geo).features;
+
+      features.forEach(function(d) {
+        d.properties.population = popByName.get(d.properties.name);
+        d.properties.density = d.properties.population
+        d.properties.quantized = quantize(d.properties.density);
+      });
+
+      svg.selectAll("path")
+          .data(features)
+        .enter().append("path")
+          .attr("class", function(d) { return "municipality " + d.properties.quantized; })
+          .attr("d", path)
+          .attr("id", function(d) { return d.properties.name; })
+        .append("title")
+        .text(function(d) { return d.properties.name + ": " + d.properties.population + "명" });
+
+      svg.selectAll("text")
+          .data(features.filter(function(d) { return d.properties.name; }))
+        .enter().append("text")
+          .attr("transform", function(d) { return "translate(" + path.centroid(d) + ")"; })
+          .attr("dy", ".35em")
+          .attr("class", "region-label")
+          .text(function(d) { return d.properties.name+d.properties.population; });
+
+    }
+
+      d3.csv("df_accident.csv", function(data) {
+          svg.selectAll("circle")
+              .data(data)
+              .enter().append("circle")
+              .attr("cx", function(d) { return projection([d.lon, d.lat])[0]; })
+              .attr("cy", function(d) { return projection([d.lon, d.lat])[1]; })
+              .attr("r", 5)
+              .attr("fill","#8856a7");
+      });
+
+          svg.append("circle").attr("cx",70).attr("cy",50).attr("r", 6).style("fill", "#ffffd9")
+          svg.append("circle").attr("cx",70).attr("cy",70).attr("r", 6).style("fill", "#edf8b1")
+          svg.append("circle").attr("cx",70).attr("cy",90).attr("r", 6).style("fill", "#c7e9b4")
+          svg.append("circle").attr("cx",70).attr("cy",110).attr("r", 6).style("fill", "#7fcdbb")
+          svg.append("circle").attr("cx",70).attr("cy",130).attr("r", 6).style("fill", "#41b6c4")
+          svg.append("circle").attr("cx",70).attr("cy",150).attr("r", 6).style("fill", "#1d91c0")
+          svg.append("text").attr("x", 50).attr("y", 30).text("10-14세 인구 수").style("font-size", "15px").attr("alignment-baseline","middle")
+          svg.append("text").attr("x", 90).attr("y", 50).text("0-5000").style("font-size", "15px").attr("alignment-baseline","middle")
+          svg.append("text").attr("x", 90).attr("y", 70).text("5000-10000").style("font-size", "15px").attr("alignment-baseline","middle")
+          svg.append("text").attr("x", 90).attr("y", 90).text("10000-15000").style("font-size", "15px").attr("alignment-baseline","middle")
+          svg.append("text").attr("x", 90).attr("y", 110).text("15000-20000").style("font-size", "15px").attr("alignment-baseline","middle")
+          svg.append("text").attr("x", 90).attr("y", 130).text("20000-25000").style("font-size", "15px").attr("alignment-baseline","middle")
+          svg.append("text").attr("x", 90).attr("y", 150).text("25000-30000").style("font-size", "15px").attr("alignment-baseline","middle")
+    </script>
+  </body>
+</html>
