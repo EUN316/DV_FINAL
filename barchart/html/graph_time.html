@@ -5,14 +5,15 @@
 <script src="https://d3js.org/d3.v4.js"></script>
 
 <!-- Create a div where the graph will take place -->
+<div><h2>시간별 화물차 사망교통사고 건 수</h2></div>
 <div id="my_dataviz"></div>
 <script>
 
 
 // set the dimensions and margins of the graph
 var margin = {top: 30, right: 30, bottom: 70, left: 60},
-    width = 800 - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom;
+    width = 1100 - margin.left - margin.right,
+    height = 700 - margin.top - margin.bottom;
 
 // append the svg object to the body of the page
 var svg = d3.select("#my_dataviz")
@@ -63,16 +64,10 @@ svg.selectAll("mybar")
     });
 })
 
-svg.append("g")
-   .attr("transform", "translate(" + (width / 2 - 110) + "," + 10 + ")")
-   .append("text")
-   .text("시간별 화물차 사망교통사고 건 수").style("fill","#000000")
-   .attr("class", "title")
-
-svg.append("circle").attr("cx",640).attr("cy",30).attr("r", 6).style("fill", "#ED636D")
-svg.append("circle").attr("cx",640).attr("cy",50).attr("r", 6).style("fill", "#016A96")
-svg.append("text").attr("x", 650).attr("y", 35).text("야간").style("font-size", "15px").attr("alignment-baseline","middle")
-svg.append("text").attr("x", 650).attr("y", 55).text("주간").style("font-size", "15px").attr("alignment-baseline","middle")
+svg.append("circle").attr("cx",900).attr("cy",30).attr("r", 6).style("fill", "#ED636D")
+svg.append("circle").attr("cx",900).attr("cy",50).attr("r", 6).style("fill", "#016A96")
+svg.append("text").attr("x", 910).attr("y", 35).text("야간").style("font-size", "15px").attr("alignment-baseline","middle")
+svg.append("text").attr("x", 910).attr("y", 55).text("주간").style("font-size", "15px").attr("alignment-baseline","middle")
 
 
 </script>
