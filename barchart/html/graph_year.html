@@ -3,7 +3,7 @@
 <html>
 <style> /* set the CSS */
 
-body { font: 12px Arial;}
+body { font: Arial;}
 
 path {
    /* stroke: steelblue;*/
@@ -39,16 +39,16 @@ path {
 .legend .Payment { background-color: #ED636D; }
 
 </style>
+
 <body>
 <!-- load the d3.js library -->
 <script src="http://d3js.org/d3.v3.min.js"></script>
-
 <h2>전체/화물차 연도별 사망자수 추이</h2>
 <script>
 // Set the dimensions of the canvas / graph
 var margin = {top: 30, right: 20, bottom: 30, left: 100},
-    width = 600 - margin.left - margin.right,
-    height = 270 - margin.top - margin.bottom;
+    width = 1100 - margin.left - margin.right,
+    height = 700 - margin.top - margin.bottom;
 
 // Parse the date / time
 var parseDate = d3.time.format("%Y").parse; //
