@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
+<html>
 <style> /* set the CSS */
 
 body { font: 12px Arial;}
@@ -42,6 +43,7 @@ path {
 <!-- load the d3.js library -->
 <script src="http://d3js.org/d3.v3.min.js"></script>
 
+<h2>전체/화물차 연도별 사망자수 추이</h2>
 <script>
 // Set the dimensions of the canvas / graph
 var margin = {top: 30, right: 20, bottom: 30, left: 100},
@@ -162,12 +164,6 @@ d3.csv("/DV_FINAL/barchart/csv/graph_year.csv", function(error, data) {
         .attr("class", "y axis")
         .call(yAxis);
 
-        svg.append("g")
-           .attr("transform", "translate(" + (width / 2-110) + "," + 0 + ")")
-           .append("text")
-           .text("전체/화물차 연도별 사망자수 추이").style("fill","#000000")
-           .attr("class", "title")
-
 
 
 
@@ -206,5 +202,5 @@ function mouseout() {
 </ul>
 </div>
 
-
 </body>
+</html>
