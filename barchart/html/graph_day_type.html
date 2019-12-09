@@ -93,7 +93,7 @@ text {
       .rangeRound([height, 0]);
   var z = d3.scaleOrdinal()
       .range(["#ED636D","#016A96"]);
-  d3.csv("graph_day_type.csv", function(d, i, columns) {
+  d3.csv("/DV_FINAL/barchart/csv/graph_day_type.csv", function(d, i, columns) {
     for (var i = 1, n = columns.length; i < n; ++i) d[columns[i]] = +d[columns[i]];
     return d;
   }, function(error, data) {
